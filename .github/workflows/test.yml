@@ -1,0 +1,36 @@
+name: Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.ts"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      - run: deno fmt --check
+      - run: deno lint
+      - name: Run tests
+        run: deno test --coverage=.coverage/deno
+      - name: Generate coverage
+        shell: bash
+        run: |
+          deno coverage .coverage/deno --lcov > .coverage/lcov.info
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: .coverage/lcov.info
+          fail_ci_if_error: true
+      - name: Remove coverage
+        shell: bash
+        run: |
+          rm -rf ./coverage/

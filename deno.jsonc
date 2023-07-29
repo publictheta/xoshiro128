@@ -1,0 +1,18 @@
+{
+    "fmt": {
+        "indentWidth": 4,
+        "exclude": ["dist/", ".coverage/", "**/*.md"]
+    },
+    "lint": {
+        "exclude": ["dist/", ".coverage/"]
+    },
+    "test": {
+        "exclude": ["dist/", ".coverage/"]
+    },
+    "imports": {
+        "https://deno.land/std/": "https://deno.land/std@0.195.0/",
+        "https://deno.land/x/dnt/": "https://deno.land/x/dnt@0.38.0/",
+        "xoshiro128": "./mod.ts",
+        "xoshiro128/random": "./random.ts"
+    }
+}
